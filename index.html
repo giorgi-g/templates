@@ -1,1 +1,427 @@
-hello
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football Academy Flyer — Editable Template</title>
+
+<!-- Icon libraries -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;700;800;900&family=Oswald:wght@500;600;700&display=swap');
+
+  :root{ --red:#d11a1a; --dark-red:#7a1414; --black:#0a0a0a; --white:#ffffff; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'Noto Sans Georgian','Oswald',sans-serif; background:#222; color:#1a1a1a;
+    display:flex;gap:24px;padding:24px;align-items:flex-start;justify-content:center;flex-wrap:wrap; }
+
+  .panel{ width:360px;background:#fff;border-radius:14px;padding:18px;position:sticky;top:24px;
+    max-height:calc(100vh - 48px);overflow-y:auto;box-shadow:0 8px 30px rgba(0,0,0,.4); }
+  .panel h2{font-size:16px;margin-bottom:4px;color:#111;}
+  .panel .sub{font-size:12px;color:#777;margin-bottom:14px;}
+  .panel fieldset{border:1px solid #e3e3e3;border-radius:10px;padding:12px;margin-bottom:14px;}
+  .panel legend{font-size:12px;font-weight:700;color:var(--red);padding:0 6px;text-transform:uppercase;letter-spacing:.5px;}
+  .panel label{display:block;font-size:11px;color:#555;margin:8px 0 3px;font-weight:600;}
+  .panel input[type=text],.panel input[type=tel],.panel textarea,.panel select{
+    width:100%;border:1px solid #ccc;border-radius:7px;padding:7px 9px;font-size:13px;font-family:inherit;background:#fff; }
+  .panel textarea{resize:vertical;min-height:38px;}
+  .panel input[type=color]{width:40px;height:30px;border:1px solid #ccc;border-radius:6px;padding:0;cursor:pointer;vertical-align:middle;}
+  .color-row{display:flex;gap:10px;align-items:center;margin:6px 0;}
+  .color-row span{font-size:12px;color:#444;}
+  .panel input[type=file]{font-size:11px;width:100%;margin-top:4px;}
+  .feat-block{border-top:1px dashed #ddd;padding-top:10px;margin-top:10px;}
+  .feat-block:first-of-type{border-top:none;}
+  .row2{display:flex;gap:8px;}
+  .row2 .lib{flex:0 0 120px;}
+  .row2 .ico{flex:1;}
+  .btn{ width:100%;background:var(--red);color:#fff;border:none;border-radius:9px;
+    padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:6px; }
+  .btn.secondary{background:#333;}
+  .btn:hover{filter:brightness(1.1);}
+  .hint{font-size:10px;color:#999;margin-top:6px;line-height:1.4;}
+
+  .stage{flex:0 0 auto;}
+  .flyer{width:600px;height:900px;position:relative;overflow:hidden;background:var(--black);color:#fff;box-shadow:0 10px 40px rgba(0,0,0,.6);}
+  .flyer .bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;}
+  .flyer .bg-overlay{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, rgba(10,10,10,.78) 0%, rgba(10,10,10,.55) 45%, rgba(10,10,10,.85) 100%);}
+  .flyer .accent-tl{position:absolute;top:0;left:0;width:55%;height:120px;background:var(--red);
+    transform:skewY(-8deg) translateY(-50px);transform-origin:left;z-index:1;opacity:.9;}
+  .flyer .accent-br{position:absolute;bottom:0;right:0;width:60%;height:90px;background:var(--red);
+    transform:skewY(-8deg) translateY(40px);z-index:1;opacity:.9;}
+
+  .content{position:relative;z-index:2;height:100%;padding:26px 28px;display:flex;flex-direction:column;}
+
+  .topbar{display:flex;align-items:flex-start;gap:14px;}
+  .crest{flex:0 0 auto;width:96px;}
+  .crest svg{width:100%;height:auto;display:block;}
+  .titles{flex:1;padding-top:6px;}
+  .t-academy{font-weight:900;font-size:30px;line-height:1.02;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.6);}
+  .t-academy .accentword{color:var(--red);}
+  .t-open{display:inline-block;margin-top:10px;background:var(--red);color:#fff;font-weight:800;font-size:19px;padding:6px 14px;border-radius:4px;line-height:1.15;}
+
+  .age{display:flex;align-items:center;gap:12px;margin:18px 0 6px;}
+  .age .aicon{font-size:30px;color:#fff;line-height:1;}
+  .age .pill{background:#fff;color:var(--red);font-weight:800;font-size:22px;padding:5px 18px;border-radius:3px;}
+
+  .features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 8px;margin:14px 0;}
+  .feat{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;}
+  .feat .ring{width:54px;height:54px;border-radius:50%;border:2.5px solid var(--red);
+    display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);}
+  .feat .ring .gi{font-size:26px;color:#fff;line-height:1;}
+  .feat .lbl{font-size:11px;font-weight:700;line-height:1.2;color:#fff;text-transform:uppercase;min-height:28px;}
+  .feat .lbl.small{font-size:9px;}
+
+  .checks{display:flex;justify-content:space-between;gap:8px;border-top:1px solid rgba(255,255,255,.18);
+    border-bottom:1px solid rgba(255,255,255,.18);padding:12px 0;margin:8px 0;}
+  .check{display:flex;align-items:center;gap:7px;flex:1;}
+  .check .mk{width:20px;height:20px;flex:0 0 auto;border-radius:4px;background:var(--red);
+    display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;line-height:1;}
+  .check .ct{font-size:9.5px;font-weight:700;line-height:1.15;text-transform:uppercase;}
+
+  .lower{display:flex;gap:14px;margin-top:16px;align-items:stretch;}
+  .offer{flex:1;display:flex;align-items:center;gap:10px;}
+  .offer .gift{width:54px;height:54px;flex:0 0 auto;}
+  .offer .gift svg{width:100%;height:100%;}
+  .offer .otext .o1{color:#36d1d1;font-weight:800;font-size:15px;line-height:1.05;}
+  .offer .otext .o2{color:var(--red);font-weight:900;font-size:26px;line-height:1;margin-top:2px;}
+  .infobox{flex:1.1;background:rgba(0,0,0,.55);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;justify-content:center;}
+  .infobox .addr{display:flex;gap:8px;font-size:12px;line-height:1.3;font-weight:600;}
+  .infobox .pin{color:var(--red);flex:0 0 auto;font-size:18px;}
+  .infobox .school{color:var(--red);font-weight:900;font-size:18px;margin-top:8px;}
+
+  .contactbar{margin-top:14px;background:#111;border-radius:30px;padding:12px 18px;display:flex;align-items:center;gap:14px;}
+  .contactbar .phcircle{width:38px;height:38px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex:0 0 auto;color:#fff;font-size:18px;}
+  .contactbar .phone{font-weight:800;font-size:24px;letter-spacing:1px;flex:1;}
+  .contactbar .follow{font-size:11px;font-weight:700;color:#aaa;letter-spacing:1px;}
+  .contactbar .socials{display:flex;gap:8px;}
+  .contactbar .socials .s{width:28px;height:28px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;}
+
+  [contenteditable]{outline:none;}
+  [contenteditable]:focus{box-shadow:0 0 0 2px rgba(54,209,209,.7);border-radius:3px;}
+</style>
+</head>
+<body>
+
+<div class="panel">
+  <h2>Flyer Editor</h2>
+  <div class="sub">Edit text, swap icons from Phosphor / Font Awesome / Material, upload a background.</div>
+
+  <fieldset>
+    <legend>Background</legend>
+    <label>Upload background image</label>
+    <input type="file" id="bgUpload" accept="image/*">
+    <button class="btn secondary" id="bgClear" style="margin-top:8px;">Remove background</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Colors</legend>
+    <div class="color-row"><input type="color" id="cRed" value="#d11a1a"><span>Primary red</span></div>
+    <div class="color-row"><input type="color" id="cBlack" value="#0a0a0a"><span>Background black</span></div>
+    <div class="color-row"><input type="color" id="cAccent" value="#36d1d1"><span>Offer accent</span></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Header</legend>
+    <label>Academy name — line 1</label><input type="text" id="f_title1" value="ჯვაროსნების">
+    <label>Academy name — line 2 (red)</label><input type="text" id="f_title2" value="აკადემია">
+    <label>Status banner</label><input type="text" id="f_open" value="მიღება დაწყებულია">
+  </fieldset>
+
+  <fieldset>
+    <legend>Age range</legend>
+    <label>Age text</label><input type="text" id="f_age" value="4 – დან 18 წლამდე">
+    <label>Age icon</label>
+    <div class="row2"><select class="lib" data-libfor="age"></select><select class="ico" data-icofor="age"></select></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Features (text + icon)</legend>
+    <div id="featEditors"></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Checklist (3)</legend>
+    <label>Check 1</label><input type="text" id="f_chk0" value="უსაფრთხო და მეგობრული გარემო">
+    <label>Check 2</label><input type="text" id="f_chk1" value="პროფესიონალური მიდგომა">
+    <label>Check 3</label><input type="text" id="f_chk2" value="საინტერესო ვარჯიშები და თამაშები">
+    <label>Check mark icon</label>
+    <div class="row2"><select class="lib" data-libfor="chk"></select><select class="ico" data-icofor="chk"></select></div>
+  </fieldset>
+
+  <fieldset>
+    <legend>Offer</legend>
+    <label>Offer line 1</label><input type="text" id="f_off1" value="პირველი ვარჯიში">
+    <label>Offer line 2 (big)</label><input type="text" id="f_off2" value="უფასოა">
+  </fieldset>
+
+  <fieldset>
+    <legend>Location & School</legend>
+    <label>Address</label>
+    <textarea id="f_addr">თბილისი, გლდანი I მიკრორაიონი, ანგია ბოჭორიშვილის ქუჩა 57</textarea>
+    <label>School line</label><input type="text" id="f_school" value="39 საჯარო სკოლა">
+  </fieldset>
+
+  <fieldset>
+    <legend>Contact</legend>
+    <label>Phone number</label><input type="tel" id="f_phone" value="591 644 559">
+    <label>Phone icon</label>
+    <div class="row2"><select class="lib" data-libfor="phone"></select><select class="ico" data-icofor="phone"></select></div>
+    <label>Follow label</label><input type="text" id="f_follow" value="FOLLOW">
+  </fieldset>
+
+  <fieldset>
+    <legend>Social icons (3)</legend>
+    <div id="socEditors"></div>
+  </fieldset>
+
+  <button class="btn" id="export">⬇ Download PNG</button>
+  <div class="hint">Export renders at 1200×1800 px (2×).</div>
+</div>
+
+<div class="stage">
+<div class="flyer" id="flyer">
+  <div class="bg" id="bg"></div>
+  <div class="bg-overlay"></div>
+  <div class="accent-tl"></div>
+  <div class="accent-br"></div>
+
+  <div class="content">
+    <div class="topbar">
+      <div class="crest">
+        <svg viewBox="0 0 120 150" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 30 L40 12 L52 26 L60 8 L68 26 L80 12 L90 30 Z" fill="#e8a200"/>
+          <circle cx="40" cy="11" r="3.5" fill="#e8a200"/><circle cx="60" cy="6" r="3.5" fill="#e8a200"/><circle cx="80" cy="11" r="3.5" fill="#e8a200"/>
+          <path d="M18 36 H102 V92 Q102 118 60 138 Q18 118 18 92 Z" fill="#fff" stroke="#111" stroke-width="2"/>
+          <path d="M18 36 H60 V90 Q60 112 39 124 Q18 112 18 90 Z" fill="#fff"/>
+          <g fill="#7a1414">
+            <rect x="30" y="55" width="18" height="6"/><rect x="36" y="49" width="6" height="18"/>
+            <rect x="24" y="46" width="9" height="3"/><rect x="24" y="67" width="9" height="3"/>
+            <rect x="45" y="46" width="9" height="3"/><rect x="45" y="67" width="9" height="3"/>
+          </g>
+          <path d="M60 36 H102 V90 Q102 112 81 124 Q60 112 60 90 Z" fill="#a01818"/>
+          <circle cx="81" cy="62" r="13" fill="#ddd"/>
+          <rect x="74" y="58" width="14" height="4" fill="#888"/>
+          <path d="M88 40 L90 70 L86 70 Z" fill="#ddd"/>
+          <path d="M18 108 Q60 138 102 108 L60 110 Z" fill="#7a1414"/>
+          <text x="33" y="150" font-family="Oswald,sans-serif" font-size="14" font-weight="700" fill="#fff">F  C  J</text>
+        </svg>
+      </div>
+      <div class="titles">
+        <div class="t-academy"><span contenteditable id="e_title1">ჯვაროსნების</span><br><span class="accentword" contenteditable id="e_title2">აკადემია</span></div>
+        <div class="t-open" contenteditable id="e_open">მიღება დაწყებულია</div>
+      </div>
+    </div>
+
+    <div class="age">
+      <span class="aicon" id="ic_age"></span>
+      <div class="pill" contenteditable id="e_age">4 – დან 18 წლამდე</div>
+    </div>
+
+    <div class="features" id="features"></div>
+    <div class="checks" id="checks"></div>
+
+    <div class="lower">
+      <div class="offer">
+        <div class="gift">
+          <svg viewBox="0 0 60 60"><rect x="8" y="24" width="44" height="30" rx="2" fill="#fff"/><rect x="8" y="24" width="44" height="9" fill="#eee"/><rect x="26" y="24" width="8" height="30" fill="#d11a1a"/><path d="M30 24c-6-2-12-8-8-12s9 3 8 12c-1-9 4-16 8-12s-2 10-8 12z" fill="#d11a1a"/></svg>
+        </div>
+        <div class="otext">
+          <div class="o1" contenteditable id="e_off1">პირველი ვარჯიში</div>
+          <div class="o2" contenteditable id="e_off2">უფასოა</div>
+        </div>
+      </div>
+      <div class="infobox">
+        <div class="addr"><span class="pin">📍</span><span contenteditable id="e_addr">თბილისი, გლდანი I მიკრორაიონი, ანგია ბოჭორიშვილის ქუჩა 57</span></div>
+        <div class="school" contenteditable id="e_school">39 საჯარო სკოლა</div>
+      </div>
+    </div>
+
+    <div class="contactbar">
+      <div class="phcircle"><span id="ic_phone"></span></div>
+      <div class="phone" contenteditable id="e_phone">591 644 559</div>
+      <div class="follow" contenteditable id="e_follow">FOLLOW</div>
+      <div class="socials" id="socials"></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+  const LIBS = [
+    {id:'phosphor', label:'Phosphor'},
+    {id:'fa',       label:'Font Awesome'},
+    {id:'material', label:'Material'}
+  ];
+
+  // index-aligned curated icons valid in each library
+  const ICONSETS = {
+    phosphor: ['soccer-ball','sneaker-move','handshake','brain','trophy','user','medal','star','barbell','shield-check','timer','users-three','flag','target','strategy','first-aid','calendar-check','graduation-cap'],
+    fa:       ['futbol','person-running','handshake','brain','trophy','user','medal','star','dumbbell','shield-halved','stopwatch','users','flag','bullseye','chess','kit-medical','calendar-check','graduation-cap'],
+    material: ['sports_soccer','directions_run','handshake','psychology','emoji_events','person','military_tech','star','fitness_center','verified_user','timer','groups','flag','adjust','sports','medical_services','event_available','school']
+  };
+  const ICON_LABELS = ['Soccer ball','Running','Handshake','Brain','Trophy','Person','Medal','Star','Dumbbell','Shield','Stopwatch','Group','Flag','Target','Strategy','First aid','Calendar','Graduation'];
+
+  const SOCIAL_SETS = {
+    phosphor: ['facebook-logo','instagram-logo','tiktok-logo','youtube-logo','x-logo','telegram-logo','whatsapp-logo','linkedin-logo'],
+    fa:       ['facebook-f','instagram','tiktok','youtube','x-twitter','telegram','whatsapp','linkedin-in'],
+    material: ['facebook','photo_camera','music_note','smart_display','close','send','chat','work']
+  };
+  const SOCIAL_LABELS = ['Facebook','Instagram','TikTok','YouTube','X / Twitter','Telegram','WhatsApp','LinkedIn'];
+  const FA_BRANDS = new Set(['facebook-f','instagram','tiktok','youtube','x-twitter','telegram','whatsapp','linkedin-in']);
+
+  const checkNames = {phosphor:'check-fat', fa:'check', material:'check'};
+  const phoneNames = {phosphor:'phone-call', fa:'phone', material:'call'};
+
+  function renderIcon(lib,name){
+    if(lib==='phosphor') return `<i class="ph ph-${name}"></i>`;
+    if(lib==='fa') return `<i class="${FA_BRANDS.has(name)?'fa-brands':'fa-solid'} fa-${name}"></i>`;
+    if(lib==='material') return `<span class="material-icons">${name}</span>`;
+    return '';
+  }
+
+  const state = {
+    age:{lib:'fa', idx:1},
+    chk:{lib:'fa'},
+    phone:{lib:'fa'},
+    features:[
+      {lib:'phosphor', idx:0, text:'ფეხბურთის სწორი საფუძვლები'},
+      {lib:'phosphor', idx:1, text:'ფიზიკური განვითარება'},
+      {lib:'phosphor', idx:2, text:'გუნდურობა და დისციპლინა'},
+      {lib:'phosphor', idx:3, text:'ტექნიკური და ტაქტიკური უნარები'},
+      {lib:'phosphor', idx:4, text:'ტურნირები და ამხანაგური მატჩები'},
+      {lib:'phosphor', idx:5, text:'UEFA-ს ლიცენზირებული მწვრთნელები'}
+    ],
+    socials:[ {lib:'fa', idx:0}, {lib:'fa', idx:1}, {lib:'fa', idx:2} ]
+  };
+
+  function libOptions(sel,cur){ sel.innerHTML = LIBS.map(l=>`<option value="${l.id}" ${l.id===cur?'selected':''}>${l.label}</option>`).join(''); }
+  function iconOptions(sel,lib,idx,kind){
+    const arr=(kind==='social'?SOCIAL_SETS:ICONSETS)[lib];
+    const lbl=kind==='social'?SOCIAL_LABELS:ICON_LABELS;
+    sel.innerHTML=arr.map((n,i)=>`<option value="${i}" ${i===idx?'selected':''}>${lbl[i]}</option>`).join('');
+  }
+
+  /* features */
+  const featEditors=document.getElementById('featEditors');
+  state.features.forEach((f,i)=>{
+    featEditors.insertAdjacentHTML('beforeend',`
+      <div class="feat-block">
+        <label>Feature ${i+1} — text</label>
+        <input type="text" id="f_feat${i}" value="${f.text}">
+        <label>Feature ${i+1} — icon</label>
+        <div class="row2"><select class="lib" id="lib_feat${i}"></select><select class="ico" id="ico_feat${i}"></select></div>
+      </div>`);
+  });
+  function renderFeatures(){
+    const fc=document.getElementById('features'); fc.innerHTML='';
+    state.features.forEach((f,i)=>{
+      const name=ICONSETS[f.lib][f.idx];
+      const cls=f.text.length>34?'lbl small':'lbl';
+      fc.insertAdjacentHTML('beforeend',
+        `<div class="feat"><div class="ring"><span class="gi">${renderIcon(f.lib,name)}</span></div>
+         <div class="${cls}" contenteditable id="e_feat${i}">${f.text}</div></div>`);
+    });
+  }
+  state.features.forEach((f,i)=>{
+    const L=document.getElementById('lib_feat'+i), I=document.getElementById('ico_feat'+i);
+    libOptions(L,f.lib); iconOptions(I,f.lib,f.idx,'feature');
+    L.addEventListener('change',e=>{ f.lib=e.target.value; iconOptions(I,f.lib,f.idx,'feature'); renderFeatures(); });
+    I.addEventListener('change',e=>{ f.idx=+e.target.value; renderFeatures(); });
+    document.getElementById('f_feat'+i).addEventListener('input',e=>{ f.text=e.target.value; renderFeatures(); });
+  });
+
+  /* socials */
+  const socEditors=document.getElementById('socEditors');
+  state.socials.forEach((s,i)=>{
+    socEditors.insertAdjacentHTML('beforeend',`
+      <div class="feat-block"><label>Social ${i+1}</label>
+        <div class="row2"><select class="lib" id="lib_soc${i}"></select><select class="ico" id="ico_soc${i}"></select></div>
+      </div>`);
+  });
+  function renderSocials(){
+    const sc=document.getElementById('socials'); sc.innerHTML='';
+    state.socials.forEach(s=>{ sc.insertAdjacentHTML('beforeend',`<div class="s">${renderIcon(s.lib,SOCIAL_SETS[s.lib][s.idx])}</div>`); });
+  }
+  state.socials.forEach((s,i)=>{
+    const L=document.getElementById('lib_soc'+i), I=document.getElementById('ico_soc'+i);
+    libOptions(L,s.lib); iconOptions(I,s.lib,s.idx,'social');
+    L.addEventListener('change',e=>{ s.lib=e.target.value; iconOptions(I,s.lib,s.idx,'social'); renderSocials(); });
+    I.addEventListener('change',e=>{ s.idx=+e.target.value; renderSocials(); });
+  });
+
+  /* age */
+  (function(){
+    const L=document.querySelector('[data-libfor="age"]'), I=document.querySelector('[data-icofor="age"]');
+    libOptions(L,state.age.lib); iconOptions(I,state.age.lib,state.age.idx,'feature');
+    function render(){ document.getElementById('ic_age').innerHTML=renderIcon(state.age.lib,ICONSETS[state.age.lib][state.age.idx]); }
+    L.addEventListener('change',e=>{ state.age.lib=e.target.value; iconOptions(I,state.age.lib,state.age.idx,'feature'); render(); });
+    I.addEventListener('change',e=>{ state.age.idx=+e.target.value; render(); });
+    render();
+  })();
+
+  /* checks */
+  function renderChecks(){
+    const cc=document.getElementById('checks'); cc.innerHTML='';
+    const name=checkNames[state.chk.lib];
+    [0,1,2].forEach(i=>{
+      const t=document.getElementById('f_chk'+i).value;
+      cc.insertAdjacentHTML('beforeend',
+        `<div class="check"><div class="mk">${renderIcon(state.chk.lib,name)}</div><div class="ct" contenteditable id="e_chk${i}">${t}</div></div>`);
+    });
+  }
+  (function(){
+    const L=document.querySelector('[data-libfor="chk"]'), I=document.querySelector('[data-icofor="chk"]');
+    libOptions(L,state.chk.lib); I.innerHTML='<option>Checkmark</option>';
+    L.addEventListener('change',e=>{ state.chk.lib=e.target.value; renderChecks(); });
+    [0,1,2].forEach(i=>document.getElementById('f_chk'+i).addEventListener('input',renderChecks));
+  })();
+
+  /* phone */
+  function renderPhone(){ document.getElementById('ic_phone').innerHTML=renderIcon(state.phone.lib,phoneNames[state.phone.lib]); }
+  (function(){
+    const L=document.querySelector('[data-libfor="phone"]'), I=document.querySelector('[data-icofor="phone"]');
+    libOptions(L,state.phone.lib); I.innerHTML='<option>Phone</option>';
+    L.addEventListener('change',e=>{ state.phone.lib=e.target.value; renderPhone(); });
+  })();
+
+  /* text binding */
+  function bind(a,b){
+    const inp=document.getElementById(a), tgt=document.getElementById(b);
+    if(!inp||!tgt) return;
+    inp.addEventListener('input',()=>{ tgt.textContent=inp.value; });
+    tgt.addEventListener('input',()=>{ inp.value=tgt.textContent; });
+  }
+  [['f_title1','e_title1'],['f_title2','e_title2'],['f_open','e_open'],['f_age','e_age'],
+   ['f_off1','e_off1'],['f_off2','e_off2'],['f_addr','e_addr'],['f_school','e_school'],
+   ['f_phone','e_phone'],['f_follow','e_follow']].forEach(([a,b])=>bind(a,b));
+
+  /* background */
+  const bg=document.getElementById('bg');
+  document.getElementById('bgUpload').addEventListener('change',e=>{
+    const f=e.target.files[0]; if(!f) return;
+    const r=new FileReader(); r.onload=ev=>{ bg.style.backgroundImage=`url('${ev.target.result}')`; }; r.readAsDataURL(f);
+  });
+  document.getElementById('bgClear').addEventListener('click',()=>{ bg.style.backgroundImage=''; });
+
+  /* colors */
+  const root=document.documentElement;
+  document.getElementById('cRed').addEventListener('input',e=>root.style.setProperty('--red',e.target.value));
+  document.getElementById('cBlack').addEventListener('input',e=>root.style.setProperty('--black',e.target.value));
+  document.getElementById('cAccent').addEventListener('input',e=>document.querySelectorAll('.offer .o1').forEach(el=>el.style.color=e.target.value));
+
+  /* export */
+  document.getElementById('export').addEventListener('click',()=>{
+    html2canvas(document.getElementById('flyer'),{scale:2,useCORS:true,backgroundColor:null}).then(c=>{
+      const a=document.createElement('a'); a.download='football-academy-flyer.png'; a.href=c.toDataURL('image/png'); a.click();
+    });
+  });
+
+  renderFeatures(); renderSocials(); renderChecks(); renderPhone();
+</script>
+</body>
+</html>
